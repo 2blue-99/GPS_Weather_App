@@ -17,8 +17,8 @@ interface API {
      * ny
      */
 
-    @GET("getUltraSrtNcst?serviceKey=${API_KEY}")
+    @GET("1360000/VilageFcstInfoService_2.0/getUltraSrtNcst")
     suspend fun getWeatherData(@QueryMap data: HashMap<String, String>): Weather
 // 코루틴 위에서 동작하므로 suspend를 안붙인다고 빌드 오류는 안나지만
-    //데이터가 정상적으로 안들어와 문제 발생함.
+//데이터가 정상적으로 안들어와 문제 발생함.
 }

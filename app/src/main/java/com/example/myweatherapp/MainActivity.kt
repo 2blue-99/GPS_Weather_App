@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             _nowLocation = NowLocation()
 
+
             model.getWeatherData(model.createRequestParams(_nowLocation))
 
         }

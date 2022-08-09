@@ -28,6 +28,6 @@ data class Weather(
         val category: String,
         val nx : Int,
         val ny : Int,
-        val obsrValue : Int
+        val obsrValue : Float
     )
 }

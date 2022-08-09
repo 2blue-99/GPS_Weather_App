@@ -18,6 +18,7 @@ android {
 
         buildConfigField "String", "SERVICE_KEY", "\"${properties.getProperty("SERVICE_KEY")}\""
         buildConfigField "String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\""
+        buildConfigField "String", "TEST_KEY", "\"${properties.getProperty("TEST_KEY")}\""
 
     }
 
