@@ -5,10 +5,9 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
-import com.example.data.impl.APIImpl
+import com.example.data.RepoImpl
 //import com.example.data.impl.APIImpl
 import com.example.myweatherapp.BuildConfig
-import com.example.myweatherapp.MainActivity
 import com.example.myweatherapp.TransLocationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,21 +70,22 @@ class MainViewModel : ViewModel() {
             put("numOfRows", "10")
             put("dataType", "JSON")
             put("base_date", baseDate)
+            put("base_date", "20220810")
             put("base_time", baseTime)
             put("nx", locate?.nx?.toInt().toString())
             put("ny", locate?.ny?.toInt().toString())
-//            put("nx", "35")
-//            put("ny", "65")
-            //이렇게 메인 엑티비티 객체를 만들면 메모리 릭??
         }
     }
 
     fun getWeatherData(data: HashMap<String, String>) {
-        Log.e(javaClass.simpleName, "getWeatherData: $data", )
+        Log.e(javaClass.simpleName, "startData: $data", )
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                var pureum = APIImpl().getWeatherData(data)
+//                var pureum = APIImpl().getWeatherData(data)
+//                var pureum = DomainDataFilter().myFilter(data)
+                var pureum = RepoImpl().RepoGetWeatherData(data)
                 Log.e(javaClass.simpleName, "get_Data: $pureum", )
+
             }catch (e:Exception){
                 Log.e(javaClass.simpleName, "Err: $e", )
             }
