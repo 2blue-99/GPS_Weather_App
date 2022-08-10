@@ -81,15 +81,11 @@ class MainViewModel : ViewModel() {
         Log.e(javaClass.simpleName, "startData: $data", )
         CoroutineScope(Dispatchers.IO).launch {
             try {
-//                var pureum = APIImpl().getWeatherData(data)
-//                var pureum = DomainDataFilter().myFilter(data)
                 var pureum = RepoImpl().RepoGetWeatherData(data)
                 Log.e(javaClass.simpleName, "get_Data: $pureum", )
-
             }catch (e:Exception){
                 Log.e(javaClass.simpleName, "Err: $e", )
             }
-
         }
     }
 }
