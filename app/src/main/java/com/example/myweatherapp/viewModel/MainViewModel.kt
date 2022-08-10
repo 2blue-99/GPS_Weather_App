@@ -4,6 +4,8 @@ import android.location.Location
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.data.RepoImpl
 //import com.example.data.impl.APIImpl
@@ -16,6 +18,15 @@ import java.lang.Exception
 import java.time.LocalDateTime
 
 class MainViewModel : ViewModel() {
+
+    private val _myValue = MutableLiveData<String>()
+
+    val myValue : LiveData<String>
+    get() = _myValue
+
+    init {
+        _myValue.value = ""
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun createRequestParams(myLocation:Location?): HashMap<String, String> {
@@ -63,17 +74,21 @@ class MainViewModel : ViewModel() {
         }
 
         val locate = myLocation?.let { TransLocationUtil.convertLocation(it) }
+        Log.e(javaClass.simpleName, "locate?.nx: ${locate?.nx}, locate?.ny: ${locate?.ny}")
 
         return HashMap<String, String>().apply {
             put("serviceKey", BuildConfig.SERVICE_KEY)
             put("pageNo", "1")
             put("numOfRows", "10")
             put("dataType", "JSON")
-            put("base_date", baseDate)
-            put("base_date", "20220810")
-            put("base_time", baseTime)
-            put("nx", locate?.nx?.toInt().toString())
-            put("ny", locate?.ny?.toInt().toString())
+//            put("base_date", baseDate)
+            put("base_date", "20220811")
+//            put("base_time", baseTime)
+            put("base_time", "0000")
+//            put("nx", locate?.nx?.toInt().toString() ?: "55" )
+//            put("ny", locate?.ny?.toInt().toString() ?: "127")
+            put("nx", "55" )
+            put("ny", "127")
         }
     }
 
@@ -83,8 +98,9 @@ class MainViewModel : ViewModel() {
             try {
                 var pureum = RepoImpl().RepoGetWeatherData(data)
                 Log.e(javaClass.simpleName, "get_Data: $pureum", )
+                _myValue.value = pureum.temperatures
             }catch (e:Exception){
-                Log.e(javaClass.simpleName, "Err: $e", )
+                Log.e(javaClass.simpleName, "@@@@@@ My Err: $e", )
             }
         }
     }

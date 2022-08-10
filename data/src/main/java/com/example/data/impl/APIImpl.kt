@@ -1,5 +1,6 @@
 package com.example.data.impl
 
+import android.util.Log
 import com.example.data.BuildConfig
 import com.example.data.data_source.API
 import com.example.domain.model.DomainWeather
@@ -25,7 +26,7 @@ class APIImpl: API {
 
     fun dataFilter(resource : Weather): DomainWeather {
 
-//        Log.e(javaClass.simpleName, "resource : ${resource.response.header.resultCode}")
+        Log.e(javaClass.simpleName, "resource : ${resource.response.header.resultCode}")
         return when(resource.response.header.resultCode.toString()){
 
             "0" -> WeatherType().getCategory(resource.response)
