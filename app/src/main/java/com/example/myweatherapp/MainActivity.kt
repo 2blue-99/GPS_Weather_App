@@ -16,13 +16,10 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.databinding.ActivityMainBinding
 import com.example.myweatherapp.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mainViewModel : MainViewModel
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     var _nowLocation: Location? = null
@@ -33,6 +30,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+
+
+        model.myValue.observe(this){
+            binding.model = it
+        }
 
         Log.e(javaClass.simpleName, "start")
         permissionLauncher = registerForActivityResult(
@@ -47,12 +50,12 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION
         ))
 
-        //뷰모델 가져오기
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // 관찰하여 데이터 값이 변경되면 호출
-        mainViewModel.myValue.observe(this, Observer {
-            binding.textView8.text = it.toString()
-        })
+//        //뷰모델 가져오기
+//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+//        // 관찰하여 데이터 값이 변경되면 호출
+//        mainViewModel.myValue.observe(this, Observer {
+//            binding.textView8.text = it.toString()
+//        })
 
 
     }

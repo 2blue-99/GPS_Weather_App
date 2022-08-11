@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.myweatherapp.viewModel.MainViewModel" />
+            type="com.example.domain.model.DomainWeather"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,7 +115,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="30dp"
-            android:text="TextView"
+            android:text="@{model.temperatures}"
             android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"

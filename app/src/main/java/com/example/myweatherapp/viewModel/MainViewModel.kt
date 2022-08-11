@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.data.RepoImpl
+import com.example.domain.model.DomainWeather
 //import com.example.data.impl.APIImpl
 import com.example.myweatherapp.BuildConfig
 import com.example.myweatherapp.TransLocationUtil
@@ -19,14 +20,10 @@ import java.time.LocalDateTime
 
 class MainViewModel : ViewModel() {
 
-    private val _myValue = MutableLiveData<String>()
-
-    val myValue : LiveData<String>
+    private val _myValue = MutableLiveData<DomainWeather>()
+    lateinit var myDataList : DomainWeather
+    val myValue : LiveData<DomainWeather>
     get() = _myValue
-
-    init {
-        _myValue.value = ""
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun createRequestParams(myLocation:Location?): HashMap<String, String> {
@@ -81,14 +78,14 @@ class MainViewModel : ViewModel() {
             put("pageNo", "1")
             put("numOfRows", "10")
             put("dataType", "JSON")
-//            put("base_date", baseDate)
-            put("base_date", "20220811")
-//            put("base_time", baseTime)
-            put("base_time", "0000")
-//            put("nx", locate?.nx?.toInt().toString() ?: "55" )
-//            put("ny", locate?.ny?.toInt().toString() ?: "127")
-            put("nx", "55" )
-            put("ny", "127")
+            put("base_date", baseDate)
+//            put("base_date", "20220811")
+            put("base_time", baseTime)
+//            put("base_time", "0000")
+            put("nx", locate?.nx?.toInt().toString() ?: "55" )
+            put("ny", locate?.ny?.toInt().toString() ?: "127")
+//            put("nx", "55" )
+//            put("ny", "127")
         }
     }
 
@@ -96,12 +93,15 @@ class MainViewModel : ViewModel() {
         Log.e(javaClass.simpleName, "startData: $data", )
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                var pureum = RepoImpl().RepoGetWeatherData(data)
-                Log.e(javaClass.simpleName, "get_Data: $pureum", )
-                _myValue.value = pureum.temperatures
+                myDataList = RepoImpl().RepoGetWeatherData(data)
+                Log.e(javaClass.simpleName, "get_Data: $myDataList", )
+//                _myValue.value = myDataList.temperatures
+                _myValue.postValue(myDataList)
+
             }catch (e:Exception){
                 Log.e(javaClass.simpleName, "@@@@@@ My Err: $e", )
             }
         }
+
     }
 }
