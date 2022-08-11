@@ -11,6 +11,7 @@ import com.example.data.RepoImpl
 import com.example.domain.model.DomainWeather
 //import com.example.data.impl.APIImpl
 import com.example.myweatherapp.BuildConfig
+import com.example.myweatherapp.DateTime
 import com.example.myweatherapp.TransLocationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +22,15 @@ import java.time.LocalDateTime
 class MainViewModel : ViewModel() {
 
     private val _myValue = MutableLiveData<DomainWeather>()
+    private val _myDateTime = MutableLiveData<DateTime>()
+
     lateinit var myDataList : DomainWeather
+
     val myValue : LiveData<DomainWeather>
-    get() = _myValue
+        get() = _myValue
+
+    val myDateTime : LiveData<DateTime>
+        get() = _myDateTime
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun createRequestParams(myLocation:Location?): HashMap<String, String> {
@@ -74,6 +81,8 @@ class MainViewModel : ViewModel() {
         Log.e(javaClass.simpleName, "locate?.nx: ${locate?.nx}, locate?.ny: ${locate?.ny}")
 
         return HashMap<String, String>().apply {
+            _myDateTime.postValue(DateTime(baseTime,baseDate))
+
             put("serviceKey", BuildConfig.SERVICE_KEY)
             put("pageNo", "1")
             put("numOfRows", "10")
@@ -95,7 +104,6 @@ class MainViewModel : ViewModel() {
             try {
                 myDataList = RepoImpl().RepoGetWeatherData(data)
                 Log.e(javaClass.simpleName, "get_Data: $myDataList", )
-//                _myValue.value = myDataList.temperatures
                 _myValue.postValue(myDataList)
 
             }catch (e:Exception){

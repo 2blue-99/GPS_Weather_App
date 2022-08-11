@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
         model.myValue.observe(this){
             binding.model = it
         }
+        model.myDateTime.observe(this){
+            binding.modelDate = it
+        }
+
 
         Log.e(javaClass.simpleName, "start")
         permissionLauncher = registerForActivityResult(
@@ -49,14 +53,6 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ))
-
-//        //뷰모델 가져오기
-//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        // 관찰하여 데이터 값이 변경되면 호출
-//        mainViewModel.myValue.observe(this, Observer {
-//            binding.textView8.text = it.toString()
-//        })
-
 
     }
 

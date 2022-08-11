@@ -7,6 +7,9 @@
         <variable
             name="model"
             type="com.example.domain.model.DomainWeather"/>
+        <variable
+            name="modelDate"
+            type="com.example.myweatherapp.DateTime"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +79,7 @@
             android:layout_marginStart="86dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="325dp"
-            android:text="강수량"
+            android:text="습도"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +92,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="30dp"
-            android:text="TextView"
+            android:text="@{modelDate.date}"
             android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +105,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="30dp"
-            android:text="TextView"
+            android:text="@{modelDate.time}"
             android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +131,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="338dp"
-            android:text="TextView"
+            android:text="@{model.humidity}"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
